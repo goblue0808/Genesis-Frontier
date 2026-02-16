@@ -1,10 +1,72 @@
-# Genesis Frontier - Planetary Management MMO Economy System
+# Genesis Frontier - Multiplayer Space Exploration & Terraforming MMO
 
 ## Overview
 
-Genesis Frontier is a comprehensive resource economy system designed for a planetary management MMO. Players must carefully balance production, consumption, and expansion while maintaining planet stability through strategic decision-making and risk management.
+Genesis Frontier is a comprehensive browser-based MMO where players build galactic empires through planetary terraforming, starship construction, exploration, diplomacy, trade, and warfare. The game features persistent gameplay that continues even when you're offline, allowing your colonies to grow and develop while you're away.
 
-## Features
+### Two Game Modes
+
+1. **Single-Player Terraforming** (`index.html`) - Focus on transforming a single hostile planet into a thriving colony
+2. **Multiplayer Universe** (`multiplayer.html`) - ⭐ **NEW!** Build a galactic empire with multiple planets, starships, and player interactions
+
+## Multiplayer Features 🌌
+
+### Starship Construction & Fleet Management
+- **4 Ship Types**: Scout Ships, Colony Ships, Freighters, and Warships
+- **Construction Queue**: Build ships over time with automatic completion
+- **Fleet Commands**: Send ships to explore, colonize, trade, or invade
+- **Ship Upgrades**: Improve speed, cargo capacity, and combat power
+
+### Galaxy Exploration
+- **50 Star Systems** in a procedurally generated galaxy
+- **1-5 Planets** per system with unique characteristics
+- **Discovery Rewards**: +100 Prestige for each new system
+- **Random Events**: Encounter pirates, ancient ruins, and spatial anomalies
+- **Rare Resource Zones**: 10 special sectors with valuable materials
+
+### Multi-Planet Colonization
+- **Unlimited Colonies**: Expand across the galaxy
+- **Colony Ships**: Transport 100 colonists to new worlds
+- **Independent Management**: Each planet develops separately
+- **Resource Tracking**: Credits, energy, metals, and population per planet
+- **Terraforming**: Transform each colony's environment
+
+### Multiplayer Diplomacy
+- **Treaty System**: Trade agreements, non-aggression pacts, and alliances
+- **Opinion Mechanics**: Relationship scores from -100 to +100
+- **Espionage**: Spy missions to reveal opponent intelligence
+- **AI Players**: Compete against computer-controlled empires
+
+### Trade & Economy
+- **Inter-Planet Trade**: Freighters transport resources between your colonies
+- **Trade Routes**: Automated resource transfers
+- **Resource Diversity**: Credits, energy, metals, and rare resources
+- **Economic Strategy**: Specialize planets for efficient production
+
+### Warfare & Invasion
+- **Invasion Requirement**: Must own 2+ planets to attack others
+- **Battle System**: Combat power vs. defense calculations
+- **Casualties**: 30% ship losses on success, 50% on failure
+- **Defensive Structures**: Shield generators, plasma cannons, orbital platforms
+- **War Consequences**: Diplomatic penalties and ongoing conflicts
+
+### Long-Term Progression
+- **Mega-Projects**: Dyson Sphere, Ring World, Wormhole Gate
+- **Prestige System**: Galactic reputation from 0 to 250,000+
+- **7 Rank Tiers**: From Explorer to Galactic Legend
+- **Technology Tree**: 8 research options for empire bonuses
+- **Victory Conditions**: Multiple paths to dominance
+
+### Persistent Offline Play
+- **Auto-Save**: Every 30 seconds to browser storage
+- **Idle Progression**: Up to 24 hours of automatic development
+- **Continuous Building**: Construction continues while offline
+- **Resource Generation**: All planets produce resources passively
+- **Ship Travel**: Exploration continues in your absence
+
+---
+
+## Single-Player Features
 
 ### 🌾 Five Core Resource Types
 - **Food**: Sustains population, critical for survival
@@ -47,12 +109,32 @@ Genesis Frontier is a comprehensive resource economy system designed for a plane
 
 ### Quick Start
 
+### Play Multiplayer Universe (Recommended)
+
 ```bash
 # Clone the repository
 git clone https://github.com/goblue0808/Genesis-Frontier.git
 cd Genesis-Frontier
 
-# Run the examples
+# Open in browser
+open multiplayer.html   # macOS
+# or
+start multiplayer.html  # Windows
+# or
+xdg-open multiplayer.html  # Linux
+```
+
+### Play Single-Player Terraforming
+
+```bash
+# Open the single-player version
+open index.html
+```
+
+### Run Economy Examples
+
+```bash
+# Run Python economy simulations
 python3 examples.py
 ```
 
@@ -103,6 +185,14 @@ Interactive scenarios included:
 5. **Optimal Strategy**: Follow best practices for success
 
 ## Documentation
+
+- **[MULTIPLAYER_GUIDE.md](MULTIPLAYER_GUIDE.md)**: ⭐ **Complete guide to multiplayer systems**
+  - Starship construction and fleet management
+  - Galaxy exploration and colonization
+  - Diplomacy, trade, and warfare
+  - Mega-projects and prestige rankings
+  - Offline progression mechanics
+  - Strategic tips and troubleshooting
 
 - **[ECONOMY_GUIDE.md](ECONOMY_GUIDE.md)**: Complete guide to the economy system
   - Detailed building statistics
@@ -230,17 +320,28 @@ The Genesis Frontier economy system is designed with these principles:
 5. **Emergent Complexity**: Simple rules create complex decisions
 6. **Meaningful Choices**: Every decision has tradeoffs
 
+## Completed Enhancements ✅
+
+The following features have been implemented:
+- ✅ Trading system between planets
+- ✅ Technology research tree
+- ✅ Random exploration events
+- ✅ Military units and defenses
+- ✅ Multiplayer economy interactions
+- ✅ Diplomacy and warfare systems
+- ✅ Persistent offline progression
+
 ## Future Enhancements
 
 Potential additions to the system:
-- Trading system between planets
-- Technology research tree
-- Random events and disasters
-- Citizen happiness and morale
-- Military units and defenses
-- Multiplayer economy interactions
+- True multiplayer with multiple human players
+- Real-time chat and messaging system
+- Mobile app version
+- More ship types and customization
+- Enhanced AI for computer opponents
 - Seasonal effects on production
-- Environmental hazards
+- Additional mega-projects
+- Achievement and quest system
 
 ## Contributing
 

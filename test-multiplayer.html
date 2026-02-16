@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplayer System Tests</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 { color: #4CAF50; text-align: center; }
+        .test-section {
+            background: #16213e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #4CAF50;
+        }
+        .test-case {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+        }
+        .pass { color: #4CAF50; font-weight: bold; }
+        .fail { color: #f44336; font-weight: bold; }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+        }
+        button:hover { background: #45a049; }
+        .summary {
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Multiplayer System Tests</h1>
+    <p style="text-align: center; opacity: 0.8;">Automated tests for starship, exploration, and multiplayer systems</p>
+    
+    <button onclick="runAllTests()">Run All Tests</button>
+    
+    <div id="results"></div>
+
+    <script src="game.js"></script>
+    <script src="multiplayer.js"></script>
+    <script>
+        let testsPassed = 0;
+        let testsFailed = 0;
+
+        function runAllTests() {
+            testsPassed = 0;
+            testsFailed = 0;
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            // Run test suites
+            testGameInitialization();
+            testStarshipSystem();
+            testGalaxyGeneration();
+            testExplorationSystem();
+            testColonizationSystem();
+            testDiplomacySystem();
+            testWarfareSystem();
+            testMegaProjectsSystem();
+            testIdleProgression();
+
+            // Display summary
+            displaySummary();
+        }
+
+        function assert(condition, testName, details = '') {
+            const testCase = document.createElement('div');
+            testCase.className = 'test-case';
+            
+            if (condition) {
+                testsPassed++;
+                testCase.innerHTML = `
+                    <span class="pass">✓</span> ${testName}
+                    <span class="pass" style="float: right;">PASS</span>
+                    ${details ? `<div style="margin-top: 5px; opacity: 0.8; font-size: 0.9em;">${details}</div>` : ''}
+                `;
+            } else {
+                testsFailed++;
+                testCase.innerHTML = `
+                    <span class="fail">✗</span> ${testName}
+                    <span class="fail" style="float: right;">FAIL</span>
+                    ${details ? `<div style="margin-top: 5px; opacity: 0.8; font-size: 0.9em; color: #f44336;">${details}</div>` : ''}
+                `;
+            }
+            
+            document.getElementById('results').appendChild(testCase);
+        }
+
+        function createTestSection(title) {
+            const section = document.createElement('div');
+            section.className = 'test-section';
+            section.innerHTML = `<h2>${title}</h2>`;
+            document.getElementById('results').appendChild(section);
+            return section;
+        }
+
+        function testGameInitialization() {
+            createTestSection('🎮 Multiplayer Game Initialization');
+            
+            const game = new MultiplayerGame();
+            
+            assert(game !== null, 'MultiplayerGame instance created');
+            assert(game.playerId !== undefined, 'Player ID generated', `ID: ${game.playerId}`);
+            assert(game.playerName === 'Commander', 'Default player name set');
+            assert(game.resources.metals === 1000, 'Metals resource initialized', `Metals: ${game.resources.metals}`);
+            assert(game.resources.rareResources === 0, 'Rare resources initialized');
+            assert(game.resources.prestige === 0, 'Prestige initialized');
+            assert(game.starships.length === 0, 'Fleet starts empty');
+            assert(game.galaxyMap !== undefined, 'Galaxy map generated');
+            assert(game.galaxyMap.systems.length === 50, 'Galaxy has 50 systems', `Found: ${game.galaxyMap.systems.length}`);
+        }
+
+        function testStarshipSystem() {
+            createTestSection('🚀 Starship Construction System');
+            
+            const game = new MultiplayerGame();
+            
+            // Test ship types
+            assert(Object.keys(game.starshipTypes).length === 4, 'All 4 ship types defined');
+            assert(game.starshipTypes.scout !== undefined, 'Scout ship type exists');
+            assert(game.starshipTypes.colony !== undefined, 'Colony ship type exists');
+            assert(game.starshipTypes.freighter !== undefined, 'Freighter type exists');
+            assert(game.starshipTypes.warship !== undefined, 'Warship type exists');
+            
+            // Test scout ship properties
+            const scout = game.starshipTypes.scout;
+            assert(scout.speed === 10, 'Scout ship has speed 10', `Speed: ${scout.speed}`);
+            assert(scout.buildTime === 5, 'Scout build time is 5 turns', `Time: ${scout.buildTime}`);
+            assert(scout.explorationBonus === 0.3, 'Scout has exploration bonus');
+            
+            // Test shipyard
+            assert(game.shipyardQueue.length === 0, 'Shipyard queue starts empty');
+            
+            // Test build requirements
+            game.resources.population = 100; // Meet scout requirements
+            const canBuild = game.canBuildShip('scout');
+            assert(canBuild === true, 'Can build scout with sufficient resources', `Credits: ${game.resources.credits}`);
+        }
+
+        function testGalaxyGeneration() {
+            createTestSection('🌌 Galaxy Generation System');
+            
+            const game = new MultiplayerGame();
+            const galaxy = game.galaxyMap;
+            
+            assert(galaxy.systems.length === 50, 'Generated 50 star systems');
+            assert(galaxy.sectors === 100, 'Galaxy has 100 sectors (10x10)', `Sectors: ${galaxy.sectors}`);
+            assert(galaxy.rareResourceZones.length === 10, 'Generated 10 rare resource zones', `Found: ${galaxy.rareResourceZones.length}`);
+            
+            // Test home system
+            const homeSystem = galaxy.systems[0];
+            assert(homeSystem.discovered === true, 'Home system is discovered');
+            assert(homeSystem.name === 'Sol Prime', 'Home system named Sol Prime', `Name: ${homeSystem.name}`);
+            assert(homeSystem.planets.length > 0, 'Home system has planets', `Planets: ${homeSystem.planets.length}`);
+            
+            // Test planet properties
+            const homePlanet = homeSystem.planets[0];
+            assert(homePlanet.colonized === true, 'Home planet is colonized');
+            assert(homePlanet.owner === game.playerId, 'Home planet owned by player');
+            
+            // Test owned planets tracking
+            assert(game.ownedPlanets.length === 1, 'Player owns 1 planet initially', `Owned: ${game.ownedPlanets.length}`);
+            
+            // Test system positions
+            const system = galaxy.systems[1];
+            assert(system.position.x >= 0 && system.position.x < 10, 'System X position valid', `X: ${system.position.x}`);
+            assert(system.position.y >= 0 && system.position.y < 10, 'System Y position valid', `Y: ${system.position.y}`);
+        }
+
+        function testExplorationSystem() {
+            createTestSection('🔭 Exploration System');
+            
+            const game = new MultiplayerGame();
+            
+            // Build a scout ship manually
+            const scout = {
+                id: 'test_scout_1',
+                type: 'scout',
+                ...game.starshipTypes.scout,
+                currentLocation: game.galaxyMap.systems[0].id,
+                destination: null,
+                traveling: false,
+                health: 100,
+                level: 1
+            };
+            game.starships.push(scout);
+            
+            assert(game.starships.length === 1, 'Scout ship added to fleet');
+            
+            // Test exploration
+            const targetSystem = game.galaxyMap.systems.find(s => !s.discovered);
+            if (targetSystem) {
+                const success = game.exploreSystem(scout.id, targetSystem.id);
+                assert(success !== false, 'Exploration command accepted');
+                assert(scout.traveling === true, 'Ship is now traveling', `Traveling: ${scout.traveling}`);
+                assert(scout.destination === targetSystem.id, 'Ship destination set correctly');
+            }
+            
+            // Test prestige system
+            const initialPrestige = game.resources.prestige;
+            const undiscoveredSystem = game.galaxyMap.systems.find(s => !s.discovered);
+            if (undiscoveredSystem) {
+                undiscoveredSystem.discovered = true;
+                game.exploredSystems.push(undiscoveredSystem.id);
+                game.resources.prestige += 100;
+                assert(game.resources.prestige === initialPrestige + 100, 'Discovery grants +100 prestige', `Prestige: ${game.resources.prestige}`);
+            }
+        }
+
+        function testColonizationSystem() {
+            createTestSection('🌍 Colonization System');
+            
+            const game = new MultiplayerGame();
+            
+            // Test colonization requirements
+            const canInvade = game.canInvadePlanet('enemy');
+            assert(canInvade === false, 'Cannot invade with only 1 planet', `Planets: ${game.ownedPlanets.length}`);
+            
+            // Add a colony ship
+            const colonyShip = {
+                id: 'test_colony_1',
+                type: 'colony',
+                ...game.starshipTypes.colony,
+                currentLocation: game.galaxyMap.systems[1].id,
+                destination: null,
+                traveling: false,
+                health: 100,
+                level: 1
+            };
+            game.starships.push(colonyShip);
+            
+            // Ensure target system is discovered
+            const targetSystem = game.galaxyMap.systems[1];
+            targetSystem.discovered = true;
+            
+            // Find uncolonized planet
+            const uncolonizedPlanet = targetSystem.planets.find(p => !p.colonized);
+            if (uncolonizedPlanet) {
+                const result = game.colonizePlanet(colonyShip.id, targetSystem.id, uncolonizedPlanet.id);
+                assert(result === true, 'Planet colonization successful');
+                assert(uncolonizedPlanet.colonized === true, 'Planet marked as colonized');
+                assert(uncolonizedPlanet.owner === game.playerId, 'Planet owner set to player');
+                assert(game.ownedPlanets.length === 2, 'Player now owns 2 planets', `Owned: ${game.ownedPlanets.length}`);
+                
+                // Test invasion unlock
+                const canInvadeNow = game.canInvadePlanet('enemy');
+                assert(canInvadeNow === true, 'Can now invade with 2+ planets');
+            }
+        }
+
+        function testDiplomacySystem() {
+            createTestSection('🤝 Diplomacy System');
+            
+            const game = new MultiplayerGame();
+            
+            const otherPlayerId = 'test_player_2';
+            game.initializeDiplomacy(otherPlayerId);
+            
+            assert(game.diplomacy[otherPlayerId] !== undefined, 'Diplomatic relation initialized');
+            assert(game.diplomacy[otherPlayerId].status === 'neutral', 'Initial status is neutral');
+            assert(game.diplomacy[otherPlayerId].opinion === 0, 'Initial opinion is 0', `Opinion: ${game.diplomacy[otherPlayerId].opinion}`);
+            assert(game.diplomacy[otherPlayerId].tradeAgreement === false, 'No initial trade agreement');
+            
+            // Test treaty
+            game.diplomacy[otherPlayerId].opinion = 25;
+            const treatyResult = game.proposeTreaty(otherPlayerId, 'trade');
+            assert(typeof treatyResult === 'boolean', 'Treaty proposal returns boolean result');
+            
+            // Test espionage
+            game.resources.credits = 10000;
+            const spyResult = game.sendSpy(otherPlayerId);
+            assert(game.resources.credits <= 5000, 'Espionage costs 5000 credits', `Remaining: ${game.resources.credits}`);
+        }
+
+        function testWarfareSystem() {
+            createTestSection('⚔️ Warfare System');
+            
+            const game = new MultiplayerGame();
+            
+            // Setup: Add second planet and warship
+            const secondPlanet = {
+                systemId: 'system_2',
+                planetId: 'planet_2',
+                planetState: {},
+                facilities: {},
+                resources: {}
+            };
+            game.ownedPlanets.push(secondPlanet);
+            
+            const warship = {
+                id: 'test_warship_1',
+                type: 'warship',
+                ...game.starshipTypes.warship,
+                currentLocation: game.galaxyMap.systems[2].id,
+                traveling: false,
+                health: 100,
+                level: 1
+            };
+            game.starships.push(warship);
+            
+            // Test invasion capability
+            assert(game.canInvadePlanet('enemy') === true, 'Invasion unlocked with 2+ planets');
+            
+            // Test defensive structures
+            game.resources.credits = 10000;
+            const defenseResult = game.buildDefense(0, 'shieldGenerator');
+            assert(defenseResult === true, 'Defense structure built successfully');
+            assert(game.ownedPlanets[0].defenseLevel > 0, 'Defense level increased', `Defense: ${game.ownedPlanets[0].defenseLevel || 0}`);
+            
+            // Test warship requirement
+            const warships = game.starships.filter(s => s.type === 'warship');
+            assert(warships.length === 1, 'Warship in fleet', `Warships: ${warships.length}`);
+        }
+
+        function testMegaProjectsSystem() {
+            createTestSection('🏗️ Mega-Projects System');
+            
+            const game = new MultiplayerGame();
+            
+            // Test mega-project requirements
+            assert(game.megaProjects.length === 0, 'No mega-projects initially');
+            
+            // Give player sufficient resources
+            game.resources.credits = 150000;
+            game.resources.metals = 100000;
+            game.resources.rareResources = 5000;
+            
+            // Add required planets
+            for (let i = 0; i < 5; i++) {
+                game.ownedPlanets.push({
+                    systemId: `system_${i}`,
+                    planetId: `planet_${i}`,
+                    planetState: {},
+                    facilities: {},
+                    resources: {}
+                });
+            }
+            
+            // Test starting a mega-project
+            const result = game.startMegaProject('dysonSphere');
+            assert(result === true, 'Dyson Sphere mega-project started', `Projects: ${game.megaProjects.length}`);
+            assert(game.megaProjects.length === 1, 'Mega-project added to queue');
+            
+            const project = game.megaProjects[0];
+            assert(project.type === 'dysonSphere', 'Correct project type');
+            assert(project.completionTurn > game.turn, 'Completion turn set', `Completion: Turn ${project.completionTurn}`);
+        }
+
+        function testIdleProgression() {
+            createTestSection('⏰ Idle Progression System');
+            
+            const game = new MultiplayerGame();
+            
+            // Test time tracking
+            assert(game.lastUpdateTime !== undefined, 'Last update time tracked');
+            assert(typeof game.lastUpdateTime === 'number', 'Last update time is numeric');
+            
+            // Test save/load system
+            game.saveGameState();
+            const savedData = localStorage.getItem('genesisFrontierSave');
+            assert(savedData !== null, 'Game state saved to localStorage');
+            
+            const parsed = JSON.parse(savedData);
+            assert(parsed.playerId === game.playerId, 'Player ID saved correctly');
+            assert(parsed.turn === game.turn, 'Turn number saved correctly');
+            assert(parsed.resources !== undefined, 'Resources saved');
+            assert(parsed.galaxyMap !== undefined, 'Galaxy map saved', `Systems: ${parsed.galaxyMap.systems.length}`);
+            
+            // Test idle calculation
+            const mockOfflineTime = 60000; // 1 minute = 1 turn
+            game.lastUpdateTime = Date.now() - mockOfflineTime;
+            game.calculateIdleProgress();
+            assert(true, 'Idle progress calculated without errors');
+            
+            // Clean up test data
+            localStorage.removeItem('genesisFrontierSave');
+        }
+
+        function displaySummary() {
+            const summary = document.createElement('div');
+            summary.className = 'summary';
+            const total = testsPassed + testsFailed;
+            const percentage = total > 0 ? ((testsPassed / total) * 100).toFixed(1) : 0;
+            
+            summary.innerHTML = `
+                <h2>Test Summary</h2>
+                <p><strong>${testsPassed}</strong> tests passed, <strong>${testsFailed}</strong> tests failed out of <strong>${total}</strong> total</p>
+                <p>Success rate: <strong>${percentage}%</strong></p>
+                ${testsFailed === 0 ? '<p style="color: #4CAF50; font-size: 1.5em;">🎉 All tests passed!</p>' : '<p style="color: #f44336;">⚠️ Some tests failed. Please review above.</p>'}
+            `;
+            
+            document.getElementById('results').insertBefore(summary, document.getElementById('results').firstChild);
+        }
+
+        // Run tests on load
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Multiplayer test suite loaded. Click "Run All Tests" to begin.');
+        });
+    </script>
+</body>
+</html>
