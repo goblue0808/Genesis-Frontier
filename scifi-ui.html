@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genesis Frontier - Sci-Fi UI Concept</title>
+    <link rel="stylesheet" href="scifi-ui.css">
+</head>
+<body>
+    <!-- SVG Gradients Definition -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <linearGradient id="atmosphere-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#00d9ff;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00ff88;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="temperature-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#2196F3;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#FF5722;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="water-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#03A9F4;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00BCD4;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="soil-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#795548;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#8D6E63;stop-opacity:1" />
+            </linearGradient>
+            <linearGradient id="pollution-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#9E9E9E;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#424242;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+    </svg>
+    
+    <div class="hud-overlay">
+        <!-- Top Header -->
+        <header class="sci-fi-header">
+            <div class="logo">
+                <span class="logo-icon">⬢</span>
+                <span class="logo-text">GENESIS FRONTIER</span>
+            </div>
+            <div class="header-stats">
+                <div class="stat-chip">
+                    <span class="stat-icon">⚡</span>
+                    <span class="stat-value" id="header-energy">5000</span>
+                    <span class="stat-unit">kW</span>
+                </div>
+                <div class="stat-chip">
+                    <span class="stat-icon">💎</span>
+                    <span class="stat-value" id="header-credits">10000</span>
+                    <span class="stat-unit">CR</span>
+                </div>
+                <div class="stat-chip">
+                    <span class="stat-icon">👥</span>
+                    <span class="stat-value" id="header-population">250</span>
+                    <span class="stat-unit">POP</span>
+                </div>
+            </div>
+            <div class="system-time">
+                <div class="time-label">SOL DAY</div>
+                <div class="time-value" id="sol-day">045</div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <div class="main-viewport">
+            <!-- Left Panel - Planet List -->
+            <div class="side-panel left-panel" id="planet-list-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">
+                        <span class="icon">🌍</span>
+                        MY COLONIES
+                    </h2>
+                    <button class="panel-toggle" onclick="togglePanel('planet-list-panel')">▼</button>
+                </div>
+                <div class="panel-content">
+                    <div class="planet-list" id="planet-list">
+                        <!-- Planet preview orbs will be added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Central 3D Planet View -->
+            <div class="planet-container">
+                <canvas id="planet-canvas" width="800" height="800"></canvas>
+                
+                <!-- Planet Info Overlay -->
+                <div class="planet-info-overlay">
+                    <div class="planet-name" id="planet-name">Genesis Prime</div>
+                    <div class="planet-type" id="planet-type">TERRAFORMING IN PROGRESS</div>
+                </div>
+
+                <!-- Orbital Markers -->
+                <div class="orbital-markers" id="orbital-markers">
+                    <!-- Dynamic markers will be added here -->
+                </div>
+
+                <!-- Planet Controls -->
+                <div class="planet-controls">
+                    <button class="control-btn" onclick="resetRotation()" title="Reset View">
+                        <span>⟲</span>
+                    </button>
+                    <button class="control-btn" onclick="zoomIn()" title="Zoom In">
+                        <span>+</span>
+                    </button>
+                    <button class="control-btn" onclick="zoomOut()" title="Zoom Out">
+                        <span>−</span>
+                    </button>
+                    <button class="control-btn" onclick="toggleAutoRotate()" title="Toggle Rotation">
+                        <span id="rotate-icon">⏸</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Panel - Facilities -->
+            <div class="side-panel right-panel" id="facilities-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">
+                        <span class="icon">🏭</span>
+                        FACILITIES
+                    </h2>
+                    <button class="panel-toggle" onclick="togglePanel('facilities-panel')">▼</button>
+                </div>
+                <div class="panel-content">
+                    <div class="facilities-list" id="facilities-list">
+                        <!-- Facility controls will be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Panel - Terraforming Dashboard -->
+        <div class="bottom-panel" id="terraforming-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">
+                    <span class="icon">📊</span>
+                    TERRAFORMING SYSTEMS
+                </h2>
+                <button class="panel-toggle" onclick="togglePanel('terraforming-panel')">▼</button>
+            </div>
+            <div class="panel-content">
+                <div class="terraforming-dashboard">
+                    <div class="system-gauge" id="atmosphere-gauge">
+                        <div class="gauge-container">
+                            <svg class="circular-gauge" viewBox="0 0 200 200">
+                                <circle class="gauge-bg" cx="100" cy="100" r="85" />
+                                <circle class="gauge-progress atmosphere-progress" cx="100" cy="100" r="85" />
+                                <text class="gauge-value" x="100" y="95" id="atmosphere-value">21</text>
+                                <text class="gauge-unit" x="100" y="115">%O₂</text>
+                            </svg>
+                        </div>
+                        <div class="gauge-label">ATMOSPHERE</div>
+                        <div class="gauge-status" id="atmosphere-status">Optimal</div>
+                    </div>
+
+                    <div class="system-gauge" id="temperature-gauge">
+                        <div class="gauge-container">
+                            <svg class="circular-gauge" viewBox="0 0 200 200">
+                                <circle class="gauge-bg" cx="100" cy="100" r="85" />
+                                <circle class="gauge-progress temperature-progress" cx="100" cy="100" r="85" />
+                                <text class="gauge-value" x="100" y="95" id="temperature-value">15</text>
+                                <text class="gauge-unit" x="100" y="115">°C</text>
+                            </svg>
+                        </div>
+                        <div class="gauge-label">TEMPERATURE</div>
+                        <div class="gauge-status" id="temperature-status">Optimal</div>
+                    </div>
+
+                    <div class="system-gauge" id="water-gauge">
+                        <div class="gauge-container">
+                            <svg class="circular-gauge" viewBox="0 0 200 200">
+                                <circle class="gauge-bg" cx="100" cy="100" r="85" />
+                                <circle class="gauge-progress water-progress" cx="100" cy="100" r="85" />
+                                <text class="gauge-value" x="100" y="95" id="water-value">45</text>
+                                <text class="gauge-unit" x="100" y="115">%</text>
+                            </svg>
+                        </div>
+                        <div class="gauge-label">WATER COVERAGE</div>
+                        <div class="gauge-status" id="water-status">Below Target</div>
+                    </div>
+
+                    <div class="system-gauge" id="soil-gauge">
+                        <div class="gauge-container">
+                            <svg class="circular-gauge" viewBox="0 0 200 200">
+                                <circle class="gauge-bg" cx="100" cy="100" r="85" />
+                                <circle class="gauge-progress soil-progress" cx="100" cy="100" r="85" />
+                                <text class="gauge-value" x="100" y="95" id="soil-value">62</text>
+                                <text class="gauge-unit" x="100" y="115">%</text>
+                            </svg>
+                        </div>
+                        <div class="gauge-label">SOIL QUALITY</div>
+                        <div class="gauge-status" id="soil-status">Good</div>
+                    </div>
+
+                    <div class="system-gauge" id="pollution-gauge">
+                        <div class="gauge-container">
+                            <svg class="circular-gauge" viewBox="0 0 200 200">
+                                <circle class="gauge-bg" cx="100" cy="100" r="85" />
+                                <circle class="gauge-progress pollution-progress" cx="100" cy="100" r="85" />
+                                <text class="gauge-value" x="100" y="95" id="pollution-value">18</text>
+                                <text class="gauge-unit" x="100" y="115">PPM</text>
+                            </svg>
+                        </div>
+                        <div class="gauge-label">POLLUTION</div>
+                        <div class="gauge-status" id="pollution-status">Acceptable</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Galaxy Map Modal -->
+        <div class="modal" id="galaxy-modal">
+            <div class="modal-content galaxy-map-container">
+                <div class="modal-header">
+                    <h2>GALAXY MAP</h2>
+                    <button class="close-btn" onclick="closeGalaxyMap()">✕</button>
+                </div>
+                <div class="galaxy-map" id="galaxy-map">
+                    <canvas id="galaxy-canvas" width="1200" height="800"></canvas>
+                    <div class="galaxy-controls">
+                        <button class="control-btn" onclick="galaxyZoomIn()">+</button>
+                        <button class="control-btn" onclick="galaxyZoomOut()">−</button>
+                        <button class="control-btn" onclick="resetGalaxyView()">⟲</button>
+                    </div>
+                </div>
+                <div class="system-details" id="system-details">
+                    <h3>Select a star system</h3>
+                    <p>Click on any node to view details</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="openGalaxyMap()">
+                <span class="btn-icon">🌌</span>
+                <span class="btn-text">GALAXY MAP</span>
+            </button>
+            <button class="nav-btn" onclick="showResearch()">
+                <span class="btn-icon">🔬</span>
+                <span class="btn-text">RESEARCH</span>
+            </button>
+            <button class="nav-btn" onclick="showFleet()">
+                <span class="btn-icon">🚀</span>
+                <span class="btn-text">FLEET</span>
+            </button>
+        </div>
+
+        <!-- Notification System -->
+        <div class="notification-area" id="notifications">
+            <!-- Dynamic notifications will appear here -->
+        </div>
+    </div>
+
+    <script src="scifi-ui.js"></script>
+</body>
+</html>
