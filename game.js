@@ -307,19 +307,31 @@ class TerraformingGame {
     }
 
     setupEventListeners() {
-        document.getElementById('next-turn').addEventListener('click', () => this.nextTurn());
-        document.getElementById('reset-planet').addEventListener('click', () => {
-            if (confirm('Are you sure you want to reset the planet? All progress will be lost.')) {
-                this.resetPlanet();
-                this.updateUI();
-                this.addAlert('Planet reset successfully.', 'info');
-            }
-        });
-        document.getElementById('change-planet').addEventListener('click', () => {
-            if (confirm('Change to a different planet type? Current progress will be reset.')) {
-                this.changePlanetType();
-            }
-        });
+        const nextTurnBtn = document.getElementById('next-turn');
+        const resetBtn = document.getElementById('reset-planet');
+        const changePlanetBtn = document.getElementById('change-planet');
+        
+        if (nextTurnBtn) {
+            nextTurnBtn.addEventListener('click', () => this.nextTurn());
+        }
+        
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to reset the planet? All progress will be lost.')) {
+                    this.resetPlanet();
+                    this.updateUI();
+                    this.addAlert('Planet reset successfully.', 'info');
+                }
+            });
+        }
+        
+        if (changePlanetBtn) {
+            changePlanetBtn.addEventListener('click', () => {
+                if (confirm('Change to a different planet type? Current progress will be reset.')) {
+                    this.changePlanetType();
+                }
+            });
+        }
     }
 
     getCurrentStage() {
@@ -622,6 +634,11 @@ class TerraformingGame {
     }
 
     updateUI() {
+        // Check if UI elements exist (for testing environments)
+        if (!document.getElementById('planet-name')) {
+            return; // Skip UI update if elements don't exist
+        }
+        
         // Update planet info
         document.getElementById('planet-name').textContent = `${this.planetTypes[this.currentPlanetType].icon} ${this.planet.name}`;
         document.getElementById('planet-type').textContent = this.planetTypes[this.currentPlanetType].name;
