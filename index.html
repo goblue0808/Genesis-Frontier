@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genesis Frontier - Terraforming Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <header>
+            <h1>🌍 Genesis Frontier</h1>
+            <p class="subtitle">Multi-Stage Terraforming Simulator</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Planet Info Panel -->
+            <div class="panel planet-info-panel">
+                <h2>Planet Status</h2>
+                <div id="planet-name" class="planet-name"></div>
+                <div id="planet-type" class="planet-type"></div>
+                <div id="terraforming-stage" class="terraforming-stage"></div>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Temperature:</span>
+                        <span id="temperature" class="stat-value"></span>
+                        <div class="progress-bar">
+                            <div id="temperature-bar" class="progress-fill temperature"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <span class="stat-label">Oxygen (O2):</span>
+                        <span id="oxygen" class="stat-value"></span>
+                        <div class="progress-bar">
+                            <div id="oxygen-bar" class="progress-fill oxygen"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <span class="stat-label">CO2 Level:</span>
+                        <span id="co2" class="stat-value"></span>
+                        <div class="progress-bar">
+                            <div id="co2-bar" class="progress-fill co2"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <span class="stat-label">Water:</span>
+                        <span id="water" class="stat-value"></span>
+                        <div class="progress-bar">
+                            <div id="water-bar" class="progress-fill water"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <span class="stat-label">Humidity:</span>
+                        <span id="humidity" class="stat-value"></span>
+                        <div class="progress-bar">
+                            <div id="humidity-bar" class="progress-fill humidity"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <span class="stat-label">Soil Quality:</span>
+                        <span id="soil" class="stat-value"></span>
+                        <div class="progress-bar">
+                            <div id="soil-bar" class="progress-fill soil"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <span class="stat-label">Pollution:</span>
+                        <span id="pollution" class="stat-value"></span>
+                        <div class="progress-bar">
+                            <div id="pollution-bar" class="progress-fill pollution"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources Panel -->
+            <div class="panel resources-panel">
+                <h2>Resources</h2>
+                <div class="resource-grid">
+                    <div class="resource-item">
+                        <span class="resource-icon">⚡</span>
+                        <span class="resource-label">Energy:</span>
+                        <span id="energy" class="resource-value"></span>
+                    </div>
+                    <div class="resource-item">
+                        <span class="resource-icon">💰</span>
+                        <span class="resource-label">Credits:</span>
+                        <span id="credits" class="resource-value"></span>
+                    </div>
+                    <div class="resource-item">
+                        <span class="resource-icon">👥</span>
+                        <span class="resource-label">Population:</span>
+                        <span id="population" class="resource-value"></span>
+                    </div>
+                </div>
+                
+                <div class="energy-production">
+                    <h3>Energy Balance</h3>
+                    <div class="energy-balance-grid">
+                        <div>Production: <span id="energy-production" class="positive"></span>/turn</div>
+                        <div>Consumption: <span id="energy-consumption" class="negative"></span>/turn</div>
+                        <div>Net: <span id="energy-net"></span>/turn</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facilities Panel -->
+            <div class="panel facilities-panel">
+                <h2>Terraforming Facilities</h2>
+                <div id="facilities-list" class="facilities-grid"></div>
+            </div>
+
+            <!-- Buildings to Purchase Panel -->
+            <div class="panel buildings-panel">
+                <h2>Available Buildings</h2>
+                <div id="buildings-list" class="buildings-grid"></div>
+            </div>
+
+            <!-- Alerts Panel -->
+            <div class="panel alerts-panel">
+                <h2>Alerts & Warnings</h2>
+                <div id="alerts-list" class="alerts-list"></div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+            <button id="next-turn" class="btn btn-primary">Next Turn</button>
+            <button id="reset-planet" class="btn btn-secondary">Reset Planet</button>
+            <button id="change-planet" class="btn btn-secondary">Change Planet Type</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
