@@ -785,7 +785,7 @@ class MultiplayerGame extends TerraformingGame {
                     
                     // Apply effects to planet stats
                     for (const [stat, value] of Object.entries(facility.effects)) {
-                        if (planetData.planetState.hasOwnProperty(stat)) {
+                        if (Object.prototype.hasOwnProperty.call(planetData.planetState, stat)) {
                             planetData.planetState[stat] += value * count;
                         } else if (stat === 'population') {
                             planetData.resources.population += value * count;
