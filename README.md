@@ -4,10 +4,11 @@
 
 Genesis Frontier is a comprehensive browser-based MMO where players build galactic empires through planetary terraforming, starship construction, exploration, diplomacy, trade, and warfare. The game features persistent gameplay that continues even when you're offline, allowing your colonies to grow and develop while you're away.
 
-### Two Game Modes
+### Game Modes
 
 1. **Single-Player Terraforming** (`index.html`) - Focus on transforming a single hostile planet into a thriving colony
-2. **Multiplayer Universe** (`multiplayer.html`) - ⭐ **NEW!** Build a galactic empire with multiple planets, starships, and player interactions
+2. **Multiplayer Universe** (`multiplayer.html`) - Build a galactic empire with multiple planets, starships, and player interactions
+3. **Modern Sci-Fi UI Concept** (`scifi-ui.html`) - ⭐ **NEW!** Experience a futuristic interface with 3D planet visualization, holographic effects, and advanced controls
 
 ## Multiplayer Features 🌌
 
@@ -130,6 +131,23 @@ xdg-open multiplayer.html  # Linux
 # Open the single-player version
 open index.html
 ```
+
+### Experience the Modern Sci-Fi UI Concept ⭐ NEW
+
+```bash
+# Open the futuristic UI prototype
+open scifi-ui.html
+```
+
+Features include:
+- **3D Rotating Planet**: Interactive planet with mouse controls
+- **Holographic Effects**: Neon accents and modern styling
+- **Facility Management**: Toggle and slider controls for buildings
+- **Terraforming Dashboard**: Real-time circular gauges
+- **Galaxy Map**: Explore star systems with zoom controls
+- **Planet Switcher**: Preview orbs for quick planet switching
+
+See [SCIFI_UI_GUIDE.md](SCIFI_UI_GUIDE.md) for complete documentation.
 
 ### Run Economy Examples
 
