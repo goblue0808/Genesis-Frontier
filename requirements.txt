@@ -1,0 +1,11 @@
+# Genesis Frontier Resource Economy System
+# No external dependencies required - uses Python standard library only
+
+# Python 3.7+ required
+# Core modules used:
+# - enum (standard library)
+# - dataclasses (standard library, Python 3.7+)
+# - typing (standard library)
+# - math (standard library)
+# - random (standard library)
+# - copy (standard library)
